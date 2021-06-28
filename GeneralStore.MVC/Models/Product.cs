@@ -6,10 +6,10 @@ using System.Web;
 
 namespace GeneralStore.MVC.Models
 {
-    public class products
+    public class Product
     {
         [Key]
-        public int ProductId{ get; set; }
+        public int ProductId { get; set; }
 
         [Required]
         [Display(Name = "Product Name")]

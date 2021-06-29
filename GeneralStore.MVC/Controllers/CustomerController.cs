@@ -9,31 +9,31 @@ using System.Web.Mvc;
 
 namespace GeneralStore.MVC.Controllers
 {
-    public class ProductController : Controller
+    public class CustomerController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
-        // GET: Product
+        // GET: Customer
         public ActionResult Index()
         {
-            List<Product> productList = _db.products.ToList();
-            List<Product> orderList = productList.OrderBy(prod => prod.Name).ToList();
+            List<Customer> customerList = _db.Customers.ToList();
+            List<Customer> orderList = customerList.OrderBy(prod => prod.FirstName).ToList();
             return View(orderList);
         }
 
-        // GET: Product
+        // GET: Customer
         public ActionResult Create()
         {
             return View();
         }
 
-        // Post: Product
+        // Post: Customer
         [HttpPost]
-        public ActionResult Create( Product product)
+        public ActionResult Create(Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _db.products.Add(product);
+                _db.Customers.Add(customer);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -48,22 +48,22 @@ namespace GeneralStore.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Product product = _db.products.Find(id);
-            if (product == null)
+            Customer customer = _db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
 
-            return View(product);
+            return View(customer);
         }
 
         //post : Delete : {id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete (int id)
+        public ActionResult Delete(int id)
         {
-            Product product = _db.products.Find(id);
-            _db.products.Remove(product);
+           Customer customer = _db.Customers.Find(id);
+            _db.Customers.Remove(customer);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -77,27 +77,27 @@ namespace GeneralStore.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Product product = _db.products.Find(id);
-            if (product == null)
+            Customer customer = _db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
 
-            return View(product);
+            return View(customer);
         }
 
         //post : Edit : {id}
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(product).State = EntityState.Modified;
+                _db.Entry(customer).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(product);
+            return View(customer);
         }
 
         //Get : Details : {id}
@@ -108,13 +108,14 @@ namespace GeneralStore.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Product product = _db.products.Find(id);
-            if (product == null)
+            Customer customer = _db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
 
-            return View(product);
+            return View(customer);
         }
     }
+   
 }
